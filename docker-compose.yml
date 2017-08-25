@@ -1,0 +1,14 @@
+version: "3.3"
+
+services:
+  api:
+    build: ./
+    ports:
+      - "8080:8080"
+    environment:
+      - PORT=8080
+      - REDIS_URI=redis://redis:6379
+      - SECRET=mysecret
+      - EXPIRE=120
+  redis:
+    image: redis:4.0.1-alpine

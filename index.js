@@ -8,20 +8,18 @@ const jwt = require('jsonwebtoken')
 
 const random = require('./random')
 
-const client = new Redis()
-
+const client = new Redis(process.env.REDIS_URI)
 const app = new Koa()
-
 app.use(require('koa-body')())
 app.use(require('koa-logger')())
 
 const router = Router()
-
 router.post('/auth',   auth)
 router.get('/verify', verify)
 router.post('/check', check)
 app.use(router.routes())
 
+console.log(`Starting on port ${process.env.PORT}`);
 app.listen(process.env.PORT)
 
 function auth (ctx) {
@@ -50,7 +48,6 @@ async function verify (ctx) {
     client.hset(email, 'token', token)
 
     ctx.status = 200
-    ctx.body = { token }
 }
 
 async function check (ctx) {
