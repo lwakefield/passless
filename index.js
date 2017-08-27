@@ -24,7 +24,7 @@ app.listen(process.env.PORT)
 
 function auth (ctx) {
     const { email } = ctx.request.body
-    const [ clientOTP, emailOTP ] = [ random(128), random(128) ]
+    const [ clientOTP, emailOTP ] = [ random(1024), random(1024) ]
 
     client.hmset(
         email,
